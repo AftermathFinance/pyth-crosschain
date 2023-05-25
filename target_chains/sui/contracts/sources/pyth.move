@@ -408,14 +408,38 @@ module pyth::pyth_tests{
 
         let scenario = test_scenario::begin(DEPLOYER);
 
+        setup_pyth(
+            &mut scenario,
+            DEPLOYER,
+            stale_price_threshold,
+            governance_emitter_chain_id,
+            governance_emitter_address,
+            data_sources,
+            base_update_fee,
+        );
+
+        let coins = coin::mint_for_testing<SUI>(to_mint, ctx(&mut scenario));
+        let clock = clock::create_for_testing(ctx(&mut scenario));
+        (scenario, coins, clock)
+    }
+
+    public fun setup_pyth(
+        scenario: &mut Scenario,
+        deployer: address,
+        stale_price_threshold: u64,
+        governance_emitter_chain_id: u64,
+        governance_emitter_address: vector<u8>,
+        data_sources: vector<DataSource>,
+        base_update_fee: u64,
+    ) {
         // Initialize Wormhole core bridge.
-        wormhole_setup::init_test_only(ctx(&mut scenario));
-        test_scenario::next_tx(&mut scenario, DEPLOYER);
+        wormhole_setup::init_test_only(ctx(scenario));
+        test_scenario::next_tx(scenario, deployer);
         // Take the `DeployerCap` from the sender of the transaction.
         let deployer_cap =
             test_scenario::take_from_address<DeployerCap>(
-                &scenario,
-                DEPLOYER
+                scenario,
+                deployer
             );
 
         // This will be created and sent to the transaction sender automatically
@@ -424,7 +448,7 @@ module pyth::pyth_tests{
         let upgrade_cap =
             package::test_publish(
                 object::id_from_address(@wormhole),
-                test_scenario::ctx(&mut scenario)
+                test_scenario::ctx(scenario)
             );
 
         let governance_chain = 1234;
@@ -446,21 +470,21 @@ module pyth::pyth_tests{
             initial_guardians,
             guardian_set_seconds_to_live,
             message_fee,
-            test_scenario::ctx(&mut scenario)
+            test_scenario::ctx(scenario)
         );
 
         // Initialize Pyth state.
         let pyth_upgrade_cap=
             package::test_publish(
                 object::id_from_address(@pyth),
-                test_scenario::ctx(&mut scenario)
+                test_scenario::ctx(scenario)
             );
 
-        setup::init_test_only(ctx(&mut scenario));
-        test_scenario::next_tx(&mut scenario, DEPLOYER);
+        setup::init_test_only(ctx(scenario));
+        test_scenario::next_tx(scenario, deployer);
         let pyth_deployer_cap = test_scenario::take_from_address<setup::DeployerCap>(
-            &scenario,
-            DEPLOYER
+            scenario,
+            deployer
         );
 
         setup::init_and_share_state(
@@ -470,12 +494,8 @@ module pyth::pyth_tests{
             base_update_fee,
             data_source::new(governance_emitter_chain_id, external_address::new(bytes32::from_bytes(governance_emitter_address))),
             data_sources,
-            ctx(&mut scenario)
+            ctx(scenario)
         );
-
-        let coins = coin::mint_for_testing<SUI>(to_mint, ctx(&mut scenario));
-        let clock = clock::create_for_testing(ctx(&mut scenario));
-        (scenario, coins, clock)
     }
 
     // #[test_only]
@@ -638,7 +658,7 @@ module pyth::pyth_tests{
     // }
 
     #[test_only]
-    fun data_sources_for_test_vaa(): vector<DataSource> {
+    public fun data_sources_for_test_vaa(): vector<DataSource> {
         // Set some valid data sources, including our test VAA's source
         vector<DataSource>[
             data_source::new(
