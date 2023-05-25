@@ -167,7 +167,23 @@ module pyth::price_info {
     }
 
     #[test_only]
-    public fun destroy(price_info: PriceInfoObject) {
+    public fun create(
+        price_info: PriceInfo,
+        ctx: &mut TxContext
+    ): PriceInfoObject {
+        new_price_info_object(price_info, ctx)
+    }
+
+    #[test_only]
+    public fun update(
+        price_info_obj: &mut PriceInfoObject,
+        price_info: &PriceInfo,
+    ) {
+        update_price_info_object(price_info_obj, price_info)
+    }
+
+    #[test_only]
+    public fun destroy(price_info: PriceInfoObject){
         let PriceInfoObject {
             id,
             price_info: _,
