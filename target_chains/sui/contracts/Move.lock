@@ -2,6 +2,8 @@
 
 [move]
 version = 0
+manifest_digest = "5389E437FC900FAAA87FB54A488D3D5CFAFF17E9D7CAF91702DDE0CCDA41EE50"
+deps_digest = "3C4103934B1E040BB6B23F1D610B4EF9F2F1166A50A104EADCF77467C004C600"
 
 dependencies = [
   { name = "Sui" },
@@ -22,7 +24,7 @@ dependencies = [
 
 [[move.package]]
 name = "Wormhole"
-source = { git = "https://github.com/wormhole-foundation/wormhole.git", rev = "d050ad1d67a5b7da9fb65030aad12ef5d774ccad", subdir = "sui/wormhole" }
+source = { git = "https://github.com/unmaykr-aftermath/wormhole.git", rev = "testnet-v0.2.0", subdir = "sui/wormhole" }
 
 dependencies = [
   { name = "Sui" },
