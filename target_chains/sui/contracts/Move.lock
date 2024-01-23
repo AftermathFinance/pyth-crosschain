@@ -2,6 +2,8 @@
 
 [move]
 version = 0
+manifest_digest = "236E53759FE4DD4D435EF116F56F903DF4858583D8FF5B3ADD6AEED61BC5550E"
+deps_digest = "3C4103934B1E040BB6B23F1D610B4EF9F2F1166A50A104EADCF77467C004C600"
 
 dependencies = [
   { name = "Sui" },
@@ -10,11 +12,11 @@ dependencies = [
 
 [[move.package]]
 name = "MoveStdlib"
-source = { git = "https://github.com/MystenLabs/sui.git", rev = "09b2081498366df936abae26eea4b2d5cafb2788", subdir = "crates/sui-framework/packages/move-stdlib" }
+source = { git = "https://github.com/MystenLabs/sui.git", rev = "framework/testnet", subdir = "crates/sui-framework/packages/move-stdlib" }
 
 [[move.package]]
 name = "Sui"
-source = { git = "https://github.com/MystenLabs/sui.git", rev = "09b2081498366df936abae26eea4b2d5cafb2788", subdir = "crates/sui-framework/packages/sui-framework" }
+source = { git = "https://github.com/MystenLabs/sui.git", rev = "framework/testnet", subdir = "crates/sui-framework/packages/sui-framework" }
 
 dependencies = [
   { name = "MoveStdlib" },
@@ -27,3 +29,8 @@ source = { git = "https://github.com/wormhole-foundation/wormhole.git", rev = "d
 dependencies = [
   { name = "Sui" },
 ]
+
+[move.toolchain-version]
+compiler-version = "1.16.1"
+edition = "legacy"
+flavor = "sui"
