@@ -9,7 +9,7 @@ published-at = "0x7b502c8a7bcb3915892347f11086745570e759fe9708d03c03accf4c90bbf5
 [dependencies.Wormhole]
 git = "https://github.com/wormhole-foundation/wormhole.git"
 subdir = "sui/wormhole"
-rev = "main"
+rev = "sui/mainnet"
 
 [addresses]
 pyth_lazer = "0x7b502c8a7bcb3915892347f11086745570e759fe9708d03c03accf4c90bbf580"
