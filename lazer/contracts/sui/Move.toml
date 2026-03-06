@@ -2,6 +2,7 @@
 name = "pyth_lazer"
 version = "0.0.0"
 edition = "2024"
+published-at = "0xf5bd2141967507050a91b58de3d95e77c432cd90d1799ee46effc27430a68c21"
 
 # TODO: Waiting for upstream PR, change to `wormhole-foundation:main` once it's
 # merged: https://github.com/wormhole-foundation/wormhole/pull/4639
@@ -11,7 +12,7 @@ subdir = "sui/wormhole"
 rev = "main"
 
 [addresses]
-pyth_lazer = "_"
+pyth_lazer = "0xf5bd2141967507050a91b58de3d95e77c432cd90d1799ee46effc27430a68c21"
 
 [dev-addresses]
 pyth_lazer = "0x100"
